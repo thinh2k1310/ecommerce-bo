@@ -19,6 +19,7 @@ function FormLogin() {
   const dispatch = useDispatch();
 
   let history = useHistory();
+
   useEffect(() => {
     if (user?.isEnable && user?.email) {
       if (user.roles[0] === USER_ROLE.DEVELOP) {
