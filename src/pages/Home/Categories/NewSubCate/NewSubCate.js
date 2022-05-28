@@ -2,34 +2,40 @@ import { pushToast } from "components/Toast";
 import MainLayout from "layout/MainLayout/MainLayout";
 import { useState } from "react";
 import http from "core/services/httpService";
-import "./CategoryCreation.scss";
+import "./NewSubCate.scss";
 import Loading from "components/Loading/Loading";
 import { useHistory } from "react-router-dom";
 
-function CategoryCreation() {
+function NewSubCate() {
   const [cate, setCate] = useState({
     name: "",
     description: ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const id = window.location.href.split("/");
 
   const onSubmit = () => {
     if (cate.name === "" || cate.description === "") {
       return;
     } else {
-      try {
-        setIsLoading(true);
-        http.post("/api/category/add", { ...cate }).then((response) => {
+      //   try {
+      setIsLoading(true);
+      http
+        .post(`/api/category/${id[id.length - 1]}/subcategory/add`, {
+          ...cate
+        })
+        .then((response) => {
           console.log(response);
           pushToast("success", response.message);
           setIsLoading(false);
-          history.push("/manage-categories");
+          history.push(`/manage-sub-categories/${id[id.length - 1]}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          pushToast("error", error.message);
+          setIsLoading(false);
         });
-      } catch (error) {
-        pushToast("error", error.message);
-        setIsLoading(false);
-      }
     }
   };
 
@@ -38,10 +44,10 @@ function CategoryCreation() {
   }
   return (
     <MainLayout>
-      <h2 className="category-title bold mb-5 mt-5">Create Categories</h2>
+      <h2 className="category-title bold mb-5 mt-5">Create Sub Categories</h2>
       <form className="form-container">
         <div className="form-group login-form-group">
-          <label className="name-field">Categories name:</label>
+          <label className="name-field">Sub Categories name:</label>
           <input
             type="text"
             className="form-control"
@@ -95,4 +101,4 @@ function CategoryCreation() {
   );
 }
 
-export default CategoryCreation;
+export default NewSubCate;

@@ -3,6 +3,11 @@
 .overview-category {
   position: relative;
   padding: 60px 40px;
+  .merchant-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .btn-add {
     position: absolute;

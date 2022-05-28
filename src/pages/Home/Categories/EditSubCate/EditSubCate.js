@@ -1,35 +1,49 @@
 import { pushToast } from "components/Toast";
 import MainLayout from "layout/MainLayout/MainLayout";
-import { useState } from "react";
+import React, { useState } from "react";
 import http from "core/services/httpService";
-import "./CategoryCreation.scss";
+import "./EditSubCate.scss";
 import Loading from "components/Loading/Loading";
 import { useHistory } from "react-router-dom";
+import useFetchSubCateDetail from "hook/useFetchSubCateDetail";
 
-function CategoryCreation() {
+function EditSubCate() {
   const [cate, setCate] = useState({
     name: "",
     description: ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const id = window.location.href.split("/");
+  const [data, getCates] = useFetchSubCateDetail();
+
+  React.useEffect(() => {
+    if (data === null) {
+      getCates(id[id.length - 1]);
+    }
+    setCate({ name: data?.name || "", description: data?.description || "" });
+  }, [data]);
 
   const onSubmit = () => {
     if (cate.name === "" || cate.description === "") {
       return;
     } else {
-      try {
-        setIsLoading(true);
-        http.post("/api/category/add", { ...cate }).then((response) => {
+      setIsLoading(true);
+      http
+        .put(`/api/subcategory/${id[id.length - 1]}`, {
+          ...cate
+        })
+        .then((response) => {
           console.log(response);
           pushToast("success", response.message);
           setIsLoading(false);
-          history.push("/manage-categories");
+          history.push(`/manage-sub-categories/${data.category}`);
+        })
+        .catch((error) => {
+          console.log(error);
+          pushToast("error", error.message);
+          setIsLoading(false);
         });
-      } catch (error) {
-        pushToast("error", error.message);
-        setIsLoading(false);
-      }
     }
   };
 
@@ -38,10 +52,10 @@ function CategoryCreation() {
   }
   return (
     <MainLayout>
-      <h2 className="category-title bold mb-5 mt-5">Create Categories</h2>
+      <h2 className="category-title bold mb-5 mt-5">Edit Sub Categories</h2>
       <form className="form-container">
         <div className="form-group login-form-group">
-          <label className="name-field">Categories name:</label>
+          <label className="name-field">Sub Categories name:</label>
           <input
             type="text"
             className="form-control"
@@ -80,12 +94,14 @@ function CategoryCreation() {
         </div>
         <div className="form-btn-submit" style={{ padding: "0px" }}>
           <button className="btn btn-info btn-sm" onClick={() => onSubmit()}>
-            Create
+            Edit
           </button>
           <button
             className="btn btn-danger btn-sm"
             style={{ marginLeft: "10px" }}
-            onClick={() => history.push("/manage-categories")}
+            onClick={() =>
+              history.push(`/manage-sub-categories/${data.category}`)
+            }
           >
             Cancel
           </button>
@@ -95,4 +111,4 @@ function CategoryCreation() {
   );
 }
 
-export default CategoryCreation;
+export default EditSubCate;

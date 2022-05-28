@@ -10,7 +10,11 @@ import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCre
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
 import Merchant from "pages/Home/Merchants/Merchants/Merchants";
 import MerchantRequest from "pages/Home/Merchants/MerchantRequest/MerchantRequest";
-import EditMerchant from "pages/Home/Merchants/EditMechan/EditMerchant";
+import CreateMerchant from "pages/Home/Merchants/AddMechant/CreateMerchant";
+import CategoryEdit from "pages/Home/Categories/CategoryEdit/CategoryEdit";
+import SubCateManage from "pages/Home/Categories/SubCateManage/SubCateManage";
+import NewSubCate from "pages/Home/Categories/NewSubCate/NewSubCate";
+import EditSubCate from "pages/Home/Categories/EditSubCate/EditSubCate";
 
 export const routeConfig = [
   {
@@ -56,10 +60,34 @@ export const routeConfig = [
     component: MerchantRequest
   },
   {
-    path: "/manage-merchants-edit",
+    path: "/manage-merchants-create",
     isPrivate: true,
     exact: true,
-    component: EditMerchant
+    component: CreateMerchant
+  },
+  {
+    path: "/manage-categories-edit/:id",
+    isPrivate: true,
+    exact: true,
+    component: CategoryEdit
+  },
+  {
+    path: "/manage-sub-categories/:id",
+    isPrivate: true,
+    exact: true,
+    component: SubCateManage
+  },
+  {
+    path: "/create-sub-categories/:id",
+    isPrivate: true,
+    exact: true,
+    component: NewSubCate
+  },
+  {
+    path: "/edit-sub-categories/:id",
+    isPrivate: true,
+    exact: true,
+    component: EditSubCate
   },
   { path: "*", component: Error }
 ];
