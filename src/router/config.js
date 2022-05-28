@@ -20,13 +20,13 @@ export const routeConfig = [
     component: Login
   },
   {
-    path: "/fogot-password-enter-email",
+    path: "/forgot-password-enter-email",
     isPrivate: false,
     exact: true,
     component: EnterEmail
   },
   {
-    path: "/fogot-password-update-password",
+    path: "/forgot-password-update-password/:token",
     isPrivate: false,
     exact: true,
     component: UpdatePassWord

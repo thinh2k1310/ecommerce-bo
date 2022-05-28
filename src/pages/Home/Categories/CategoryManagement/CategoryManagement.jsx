@@ -21,7 +21,7 @@ function CategoryManagement() {
         <div className="main">
           <Table bordered>
             <thead>
-              <tr>
+              <tr style={{ backgroundColor: "#0B79C1", color: "#fff" }}>
                 <th>No</th>
                 <th>Category Name</th>
                 <th>Description</th>

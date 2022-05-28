@@ -84,6 +84,8 @@ export const login = (values) => async (dispatch) => {
       pushToast("error", data?.message);
     } else if (user?.role === USER_ROLE.ADMIN) {
       dispatch(loginSuccess({ user, token, rememberMe }));
+    } else if (user?.role !== USER_ROLE.ADMIN) {
+      pushToast("error", "No access at here");
     }
   } catch (e) {
     dispatch(setLoading({ loading: false }));
@@ -126,6 +128,32 @@ export const requestResetPassword = (values) => async (dispatch) => {
   } catch (e) {
     dispatch(setLoading({ loading: false }));
     pushToast("error", e.message);
+
+    return;
+  }
+};
+
+export const resetPassword = (values, token) => async (dispatch) => {
+  try {
+    dispatch(setLoading({ loading: true }));
+
+    const data = await http.post(`/api/auth/reset/${token}`, {
+      password: values.password
+    });
+
+    const success = data.success;
+
+    dispatch(setLoading({ loading: false }));
+
+    if (success) {
+      pushToast("success", "Check your email");
+      // window.location.href = "/";
+    } else {
+      pushToast("error", data?.error);
+    }
+  } catch (e) {
+    dispatch(setLoading({ loading: false }));
+    pushToast("error", e?.error);
 
     return;
   }
