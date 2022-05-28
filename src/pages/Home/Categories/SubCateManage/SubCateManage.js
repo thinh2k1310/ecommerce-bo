@@ -1,33 +1,36 @@
-import useFetchCate from "hook/useFetchCate";
+import useFetchSubCateById from "hook/useFetchSubCateById";
 import MainLayout from "layout/MainLayout/MainLayout";
-import { React } from "react";
+import React from "react";
+import { Table } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { Table } from "reactstrap";
-import "./CategoryManagement.scss";
+import "./SubCateManage.scss";
 
-function CategoryManagement() {
+export default function SubCateManage() {
+  const id = window.location.href.split("/");
   const history = useHistory();
-  const [data] = useFetchCate();
+  const [data, getCates] = useFetchSubCateById();
+
+  React.useEffect(() => {
+    getCates(id[id.length - 1]);
+  }, []);
 
   const newCategory = () => {
-    history.push("/manage-categories-new");
+    history.push(`/create-sub-categories/${id[id.length - 1]}`);
   };
-
   return (
     <MainLayout>
       <div className="overview-category">
-        <h2>Manager Categories</h2>
+        <h2>Manager Sub Categories</h2>
         <span className="btn-add" onClick={newCategory}>
-          <button className="btn btn-info ">New</button>
+          <button className="btn btn-info ">New Sub Category</button>
         </span>
         <div className="main">
           <Table bordered>
             <thead>
               <tr style={{ backgroundColor: "#0B79C1", color: "#fff" }}>
-                <th>No</th>
-                <th>Category Name</th>
+                <th>Stt</th>
+                <th>Sub Category Name</th>
                 <th>Description</th>
-                <th>Sub Category</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -38,25 +41,15 @@ function CategoryManagement() {
                   <th scope="row">{index}</th>
                   <td>{cate.name}</td>
                   <td>{cate.description}</td>
-                  <td style={{ color: "blue", fontWeight: "bold" }}>
-                    {cate.subcategories}
-                  </td>
+
                   <td>
                     <button
                       className="btn btn-primary "
                       onClick={() =>
-                        history.push(`/manage-categories-edit/${cate._id}`)
+                        history.push(`/edit-sub-categories/${cate._id}`)
                       }
                     >
                       Edit
-                    </button>
-                    <button
-                      className="btn btn-warning "
-                      onClick={() =>
-                        history.push(`/manage-sub-categories/${cate._id}`)
-                      }
-                    >
-                      Manage Sub Category
                     </button>
                   </td>
                 </tr>
@@ -68,5 +61,3 @@ function CategoryManagement() {
     </MainLayout>
   );
 }
-
-export default CategoryManagement;

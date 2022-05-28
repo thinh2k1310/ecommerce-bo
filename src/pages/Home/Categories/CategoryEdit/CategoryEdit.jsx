@@ -1,31 +1,44 @@
 import { pushToast } from "components/Toast";
 import MainLayout from "layout/MainLayout/MainLayout";
-import { useState } from "react";
+import React, { useState } from "react";
 import http from "core/services/httpService";
-import "./CategoryCreation.scss";
+import "./CategoryEdit.scss";
 import Loading from "components/Loading/Loading";
 import { useHistory } from "react-router-dom";
+import useFetchCateDetail from "hook/useFetchCateDetail";
 
-function CategoryCreation() {
+function CategoryEdit() {
   const [cate, setCate] = useState({
     name: "",
     description: ""
   });
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  const [data, getCates] = useFetchCateDetail();
+  const id = window.location.href.split("/");
+
+  React.useEffect(() => {
+    if (data === null) {
+      getCates(id[id.length - 1]);
+    }
+    setCate({ name: data?.name || "", description: data?.description || "" });
+  }, [data]);
 
   const onSubmit = () => {
+    console.log(id);
     if (cate.name === "" || cate.description === "") {
       return;
     } else {
       try {
         setIsLoading(true);
-        http.post("/api/category/add", { ...cate }).then((response) => {
-          console.log(response);
-          pushToast("success", response.message);
-          setIsLoading(false);
-          history.push("/manage-categories");
-        });
+        http
+          .put(`/api/category/${id[id.length - 1]}`, { ...cate })
+          .then((response) => {
+            console.log(response);
+            pushToast("success", response.message);
+            setIsLoading(false);
+            history.push("/manage-categories");
+          });
       } catch (error) {
         pushToast("error", error.message);
         setIsLoading(false);
@@ -38,7 +51,7 @@ function CategoryCreation() {
   }
   return (
     <MainLayout>
-      <h2 className="category-title bold mb-5 mt-5">Create Categories</h2>
+      <h2 className="category-title bold mb-5 mt-5">Edit Categories</h2>
       <form className="form-container">
         <div className="form-group login-form-group">
           <label className="name-field">Categories name:</label>
@@ -47,6 +60,7 @@ function CategoryCreation() {
             className="form-control"
             placeholder="Enter Category Name"
             name="category"
+            disabled
             value={cate?.name}
             onChange={(e) =>
               setCate({
@@ -78,21 +92,21 @@ function CategoryCreation() {
             {cate.description === "" && "description is requied"}
           </span>
         </div>
-        <div className="form-btn-submit" style={{ padding: "0px" }}>
-          <button className="btn btn-info btn-sm" onClick={() => onSubmit()}>
-            Create
-          </button>
-          <button
-            className="btn btn-danger btn-sm"
-            style={{ marginLeft: "10px" }}
-            onClick={() => history.push("/manage-categories")}
-          >
-            Cancel
-          </button>
-        </div>
       </form>
+      <div className="form-btn-submit">
+        <button className="btn btn-info btn-sm" onClick={() => onSubmit()}>
+          Edit
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          style={{ marginLeft: "10px" }}
+          onClick={() => history.push("/manage-categories")}
+        >
+          Cancel
+        </button>
+      </div>
     </MainLayout>
   );
 }
 
-export default CategoryCreation;
+export default CategoryEdit;
