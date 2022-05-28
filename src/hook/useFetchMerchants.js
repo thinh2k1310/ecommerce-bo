@@ -21,7 +21,6 @@ export default function useFetchMerchants() {
     try {
       setIsLoading(true);
       await http.get(`/api/merchant/`).then((response) => {
-        console.log(response);
         setData(
           response.data.map((da) => ({
             ...da,

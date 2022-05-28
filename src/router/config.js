@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 import Login from "pages/Authentication/Login/Login";
 import Error from "pages/Error/Error.js";
-import EnterEmail from "pages/Authentication/FogotPassword/EnterEmail";
-import UpdatePassWord from "pages/Authentication/FogotPassword/UpdatePassWord";
+import EnterEmail from "pages/Authentication/ForgotPassword/EnterEmail";
+import UpdatePassWord from "pages/Authentication/ForgotPassword/UpdatePassWord";
 import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCreation";
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
 import Merchant from "pages/Home/Merchants/Merchants/Merchants";

@@ -62,6 +62,7 @@ function EditSubCate() {
             placeholder="Enter Category Name"
             name="category"
             value={cate?.name}
+            disabled
             onChange={(e) =>
               setCate({
                 ...cate,

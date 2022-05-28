@@ -35,7 +35,7 @@ function CategoryManagement() {
             <tbody>
               {data?.map((cate, index) => (
                 <tr key={index}>
-                  <th scope="row">{index}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{cate.name}</td>
                   <td>{cate.description}</td>
                   <td style={{ color: "blue", fontWeight: "bold" }}>
