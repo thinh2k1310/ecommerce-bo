@@ -105,3 +105,28 @@ export const logout = () => async (dispatch) => {
     return console.error(e.message);
   }
 };
+
+export const requestResetPassword = (values) => async (dispatch) => {
+  try {
+    dispatch(setLoading({ loading: true }));
+
+    const data = await http.post("/api/auth/forgot", {
+      email: values.email
+    });
+
+    const success = data.success;
+
+    dispatch(setLoading({ loading: false }));
+
+    if (success) {
+      pushToast("success", "Check your email");
+
+      // window.location.href = "/";
+    }
+  } catch (e) {
+    dispatch(setLoading({ loading: false }));
+    pushToast("error", e.message);
+
+    return;
+  }
+};
