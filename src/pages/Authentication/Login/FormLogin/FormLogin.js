@@ -94,7 +94,7 @@ function FormLogin() {
           </label>
 
           <div className="login-form-forgot">
-            <Link to="/fogot-password-enter-email" className="forgot-password">
+            <Link to="/forgot-password-enter-email" className="forgot-password">
               Forgot password
             </Link>
           </div>
