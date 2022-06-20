@@ -14,7 +14,6 @@ const style = (active) => {
 };
 
 function Merchant() {
-  let noMerchant = 0;
   const [data, getMerchants] = useFetchMerchants();
   const [setStatusMerchants, , reload] = useSetStatusMerchant();
   const history = useHistory();
@@ -27,7 +26,7 @@ function Merchant() {
     return (
       <tr key={index}>
         <th scope="row" style={{ textAlign: "center" }}>
-          {++noMerchant}
+          {index + 1}
         </th>
         <td>{merchant.name}</td>
         <td>{merchant.email}</td>

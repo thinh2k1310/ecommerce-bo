@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 import Login from "pages/Authentication/Login/Login";
 import Error from "pages/Error/Error.js";
-import EnterEmail from "pages/Authentication/FogotPassword/EnterEmail";
-import UpdatePassWord from "pages/Authentication/FogotPassword/UpdatePassWord";
+import EnterEmail from "pages/Authentication/ForgotPassword/EnterEmail";
+import UpdatePassWord from "pages/Authentication/ForgotPassword/UpdatePassWord";
 import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCreation";
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
 import Merchant from "pages/Home/Merchants/Merchants/Merchants";
@@ -15,6 +15,7 @@ import CategoryEdit from "pages/Home/Categories/CategoryEdit/CategoryEdit";
 import SubCateManage from "pages/Home/Categories/SubCateManage/SubCateManage";
 import NewSubCate from "pages/Home/Categories/NewSubCate/NewSubCate";
 import EditSubCate from "pages/Home/Categories/EditSubCate/EditSubCate";
+import ResetPassword from "pages/Authentication/ForgotPassword/ResetPassword";
 
 export const routeConfig = [
   {
@@ -34,6 +35,12 @@ export const routeConfig = [
     isPrivate: false,
     exact: true,
     component: UpdatePassWord
+  },
+  {
+    path: "/reset-password",
+    isPrivate: false,
+    exact: true,
+    component: ResetPassword
   },
   {
     path: "/manage-categories-new",

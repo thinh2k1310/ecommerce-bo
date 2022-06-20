@@ -22,6 +22,11 @@ const menu_manage = [
     label: "Categories",
     path: "/manage-categories",
     icon: ""
+  },
+  {
+    label: "Update Password",
+    path: "/reset-password",
+    icon: ""
   }
 ];
 
