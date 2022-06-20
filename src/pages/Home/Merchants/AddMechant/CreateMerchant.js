@@ -1,14 +1,19 @@
+/*eslint-disable*/
 import Loading from "components/Loading/Loading";
 import { pushToast } from "components/Toast";
 import http from "core/services/httpService";
 import useFetchCateNoSub from "hook/useFetchCateNoSub";
 import MainLayout from "layout/MainLayout/MainLayout";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./CreateMerchant.scss";
+import Select from "react-select";
 
 export default function CreateMerchant() {
   const [data] = useFetchCateNoSub();
+  const [options, setOptions] = useState([
+    { value: "chocolate", label: "Chocolate" }
+  ]);
   const history = useHistory();
   const [dataSubmit, setDataSubmit] = useState({
     name: "",
@@ -17,33 +22,20 @@ export default function CreateMerchant() {
     email: "",
     categories: [{ _id: "" }]
   });
-  const [cates, setCates] = useState([
-    { title: "Category 1", placeholder: "Category 1" }
-  ]);
+  useEffect(() => {
+    setOptions(
+      data?.map((cate) => {
+        return { value: cate._id, label: cate.name };
+      })
+    );
+  }, [data]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleCate = () => {
-    console.log(dataSubmit?.categories[dataSubmit?.categories.length - 1]);
-    const temp = [...cates];
-    if (dataSubmit?.categories[dataSubmit?.categories.length - 1]._id === "") {
-      return;
-    }
-    temp.push({
-      title: `Category ${cates.length + 1}`,
-      placeholder: `Category ${cates.length + 1}`
-    });
-    setCates(temp);
+  const handleCate = (values) => {
     setDataSubmit({
       ...dataSubmit,
-      categories: [...dataSubmit.categories, {}]
+      categories: values.map((value) => value.value)
     });
-  };
-
-  const handleListCate = (e, index) => {
-    const temp = [...dataSubmit.categories];
-    console.log(temp);
-    temp[index]._id = e.target.value;
-    setDataSubmit({ ...dataSubmit, categories: temp });
   };
 
   const handleSubmit = () => {
@@ -140,31 +132,8 @@ export default function CreateMerchant() {
           </div>
         </div>
         <div className="edit-merchant-body">
-          {cates.map((fea, i) => (
-            <div key={i} className="select-ctn">
-              <span style={{ marginLeft: "5px", marginBottom: "3px" }}>
-                {fea.title}
-              </span>
-              <select
-                value={dataSubmit.categories[i]?._id}
-                className="custom-select"
-                onChange={(e) => handleListCate(e, i)}
-              >
-                {data?.map((cate, index) => (
-                  <option value={cate._id} key={index}>
-                    {cate.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ))}
+          <Select isMulti options={options} onChange={handleCate} />
         </div>
-        <button
-          className="btn btn-primary add-cate"
-          onClick={() => handleCate()}
-        >
-          Add Category
-        </button>
       </div>
     </MainLayout>
   );

@@ -10,7 +10,6 @@ export default function useFetchCateNoSub() {
     try {
       setIsLoading(true);
       await http.get(`/api/category`).then((response) => {
-        console.log(response);
         setData(response.data);
         setIsLoading(false);
       });
