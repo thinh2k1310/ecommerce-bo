@@ -16,7 +16,7 @@ function CategoryManagement() {
   return (
     <MainLayout>
       <div className="overview-category">
-        <h2>Manager Categories</h2>
+        <h2> Categories</h2>
         <span className="btn-add" onClick={newCategory}>
           <button className="btn btn-info ">New</button>
         </span>

@@ -20,7 +20,7 @@ export default function SubCateManage() {
   return (
     <MainLayout>
       <div className="overview-category">
-        <h2>Manager Sub Categories</h2>
+        <h2>Manage Sub-categories</h2>
         <span className="btn-add" onClick={newCategory}>
           <button className="btn btn-info ">New Sub Category</button>
         </span>
