@@ -9,7 +9,6 @@ const AuthBanner = () => {
           <img src="" alt="" className="logo" />
         </div>
       </div>
-      <p className="slogan">Final Project</p>
     </div>
   );
 };
