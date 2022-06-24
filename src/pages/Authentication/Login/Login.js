@@ -14,8 +14,7 @@ const Login = () => {
   return (
     <AuthLayout>
       <div className="login-wrapper">
-        <h2 className="login-title">Log In</h2>
-        <p>Hello and welcome !</p>
+        <h2 className="login-title">WELCOME ADMIN</h2>
         <div className="login-form">
           <FormLogin />
         </div>
