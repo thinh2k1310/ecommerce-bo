@@ -132,6 +132,7 @@ export default function CreateMerchant() {
           </div>
         </div>
         <div className="edit-merchant-body">
+          <h6 style={{ marginLeft: "5px" }}>Category</h6>
           <Select isMulti options={options} onChange={handleCate} />
         </div>
       </div>
