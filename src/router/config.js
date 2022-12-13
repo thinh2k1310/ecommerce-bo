@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Login from "pages/Authentication/Login/Login";
 import Error from "pages/Error/Error.js";
 import EnterEmail from "pages/Authentication/ForgotPassword/EnterEmail";
+import EnterOtp from "pages/Authentication/ForgotPassword/EnterOtp";
 import UpdatePassWord from "pages/Authentication/ForgotPassword/UpdatePassWord";
 import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCreation";
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
@@ -32,6 +33,18 @@ export const routeConfig = [
   },
   {
     path: "/forgot-password-update-password/:token",
+    isPrivate: false,
+    exact: true,
+    component: UpdatePassWord
+  },
+  {
+    path: "/forgot-password-enter-otp",
+    isPrivate: false,
+    exact: true,
+    component: EnterOtp
+  },
+  {
+    path: "/forgot-password-enter-new-password",
     isPrivate: false,
     exact: true,
     component: UpdatePassWord

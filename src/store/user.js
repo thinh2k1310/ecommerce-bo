@@ -105,7 +105,7 @@ export const requestResetPassword = (values) => async (dispatch) => {
   try {
     dispatch(setLoading({ loading: true }));
 
-    const data = await http.post("/api/auth/forgot", {
+    const data = await http.post("/api/auth/password/forgot", {
       email: values.email
     });
 
@@ -114,9 +114,10 @@ export const requestResetPassword = (values) => async (dispatch) => {
     dispatch(setLoading({ loading: false }));
 
     if (success) {
-      pushToast("success", "Check your email");
-
-      // window.location.href = "/";
+      localStorage.setItem("requestedResetEmail", values.email);
+      window.location.href = "/forgot-password-enter-otp";
+    } else {
+      pushToast("error", data?.message);
     }
   } catch (e) {
     dispatch(setLoading({ loading: false }));
@@ -126,12 +127,13 @@ export const requestResetPassword = (values) => async (dispatch) => {
   }
 };
 
-export const resetPassword = (values, token) => async (dispatch) => {
+export const confirmResetPasswordOtp = (values) => async (dispatch) => {
   try {
     dispatch(setLoading({ loading: true }));
-
-    const data = await http.post(`/api/auth/reset/${token}`, {
-      password: values.password
+    const data = await http.put("/api/auth/validate", {
+      email: values.email,
+      OTP: values.otp,
+      isUser: true
     });
 
     const success = data.success;
@@ -139,10 +141,40 @@ export const resetPassword = (values, token) => async (dispatch) => {
     dispatch(setLoading({ loading: false }));
 
     if (success) {
-      pushToast("success", "Check your email");
-      // window.location.href = "/";
+      window.location.href = "/forgot-password-enter-new-password";
     } else {
-      pushToast("error", data?.error);
+      pushToast("error", data?.message);
+    }
+  } catch (e) {
+    dispatch(setLoading({ loading: false }));
+    pushToast("error", e.message);
+
+    return;
+  }
+};
+
+export const resetPassword = (values) => async (dispatch) => {
+  try {
+    dispatch(setLoading({ loading: true }));
+    const data = await http.put(`/api/auth/password/reset`, {
+      password: values.password,
+      email: values.email
+    });
+
+    const success = data.success;
+
+    dispatch(setLoading({ loading: false }));
+
+    if (success) {
+      localStorage.removeItem("requestedResetEmail");
+      pushToast("success", data?.message, {
+        onClose: () => {
+          window.location.href = "/login";
+        },
+        hideProgressBar: false
+      });
+    } else {
+      pushToast("error", data?.message);
     }
   } catch (e) {
     dispatch(setLoading({ loading: false }));
