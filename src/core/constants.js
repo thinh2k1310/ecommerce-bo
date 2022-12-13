@@ -1,5 +1,6 @@
 export const USER_ROLE = {
-  ADMIN: "ROLE_ADMIN"
+  ADMIN: "ROLE_ADMIN",
+  MODERATOR: "ROLE_MODERATOR"
 };
 
 export const ERRORS = {
