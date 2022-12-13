@@ -30,7 +30,9 @@ const slice = createSlice({
       }
 
       if (payload?.user?.role === USER_ROLE.ADMIN) {
-        window.location.href = "/manage-merchants";
+        window.location.href = "/moderators";
+      } else {
+        window.location.href = "/reset-password";
       }
     },
     logoutSuccess: (state) => {
@@ -79,7 +81,10 @@ export const login = (values) => async (dispatch) => {
 
     if (!token) {
       pushToast("error", data?.message);
-    } else if (user?.role === USER_ROLE.ADMIN) {
+    } else if (
+      user?.role === USER_ROLE.ADMIN ||
+      user?.role === "ROLE_MODERATOR"
+    ) {
       dispatch(loginSuccess({ user, token, rememberMe }));
     } else if (user?.role !== USER_ROLE.ADMIN) {
       pushToast("error", "No access at here");

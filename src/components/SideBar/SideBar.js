@@ -10,18 +10,8 @@ import "./SideBar.scss";
 
 const menu_manage = [
   {
-    label: "Merchant",
-    path: "/manage-merchants",
-    icon: ""
-  },
-  {
-    label: "Request Merchant",
-    path: "/manage-merchants-request",
-    icon: ""
-  },
-  {
-    label: "Categories",
-    path: "/manage-categories",
+    label: "Moderators",
+    path: "/moderators",
     icon: ""
   },
   {
@@ -71,6 +61,9 @@ const SideBar = () => {
           </div>
           <ul className="sidebar-list list-unstyled components">
             {menu?.map((item, key) => {
+              if (item.path == "/moderators" && user?.role != "ROLE_ADMIN") {
+                return null;
+              }
               return (
                 <li
                   className={

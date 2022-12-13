@@ -9,7 +9,8 @@ import EnterOtp from "pages/Authentication/ForgotPassword/EnterOtp";
 import UpdatePassWord from "pages/Authentication/ForgotPassword/UpdatePassWord";
 import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCreation";
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
-import Merchant from "pages/Home/Merchants/Merchants/Merchants";
+import Moderators from "pages/Home/Moderators";
+import CreateModerator from "pages/Home/Moderators/CreateModerator";
 import MerchantRequest from "pages/Home/Merchants/MerchantRequest/MerchantRequest";
 import CreateMerchant from "pages/Home/Merchants/AddMechant/CreateMerchant";
 import CategoryEdit from "pages/Home/Categories/CategoryEdit/CategoryEdit";
@@ -68,10 +69,16 @@ export const routeConfig = [
     component: CategoryManagement
   },
   {
-    path: "/manage-merchants",
+    path: "/moderators",
     isPrivate: true,
     exact: true,
-    component: Merchant
+    component: Moderators
+  },
+  {
+    path: "/moderators/new",
+    isPrivate: true,
+    exact: true,
+    component: CreateModerator
   },
   {
     path: "/manage-merchants-request",
