@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import AuthLayout from "layout/AuthLayout/AuthLayout";
@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 function UpdatePassWord() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const { token } = useParams();
+  const email = localStorage.getItem("requestedResetEmail");
 
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
@@ -18,7 +18,8 @@ function UpdatePassWord() {
   const formik = useFormik({
     initialValues: {
       password: "",
-      confirmPassword: ""
+      confirmPassword: "",
+      email: email
     },
     validationSchema: Yup.object({
       password: Yup.string()
@@ -29,7 +30,7 @@ function UpdatePassWord() {
         .required("Required!")
     }),
     onSubmit: async (values) => {
-      dispatch(resetPassword(values.password, token));
+      dispatch(resetPassword(values));
     }
   });
   const { values, errors } = formik;
