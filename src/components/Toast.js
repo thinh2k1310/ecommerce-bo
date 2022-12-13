@@ -2,16 +2,18 @@ import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const pushToast = (type, message) => {
+const pushToast = (type, message, callbacks) => {
   switch (type) {
     case "success":
       toast.success(message, {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_RIGHT,
+        ...callbacks
       });
       break;
     case "error":
       toast.error(message, {
-        position: toast.POSITION.TOP_RIGHT
+        position: toast.POSITION.TOP_RIGHT,
+        ...callbacks
       });
       break;
     case "warn":
