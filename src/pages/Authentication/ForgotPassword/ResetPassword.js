@@ -14,19 +14,22 @@ function ResetPassword() {
   const history = useHistory();
 
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isShowOldPassword, setIsShowOldPassword] = useState(false);
   const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
       password: "",
+      newPassword: "",
       confirmPassword: ""
     },
     validationSchema: Yup.object({
-      password: Yup.string()
+      password: Yup.string().required("Required!"),
+      newPassword: Yup.string()
         .min(5, "Minimum 5 characters")
         .required("Required!"),
       confirmPassword: Yup.string()
-        .min(5, "Minimum 5 characters")
+        .oneOf([Yup.ref("newPassword")], "Password's not match")
         .required("Required!")
     }),
     onSubmit: async (values, { resetForm }) => {
@@ -35,12 +38,14 @@ function ResetPassword() {
       try {
         setLoading(true);
 
-        const res = await http.post("/api/auth/password", values);
+        const res = await http.put("/api/auth/password/change", values);
 
         setLoading(false);
         if (res.success) {
           pushToast("success", res.message);
           history.push("/");
+        } else {
+          pushToast("error", res.message);
         }
       } catch (e) {
         setLoading(false);
@@ -62,10 +67,31 @@ function ResetPassword() {
             <div className="update-pass-form-group">
               <label>Old Password</label>
               <input
-                type={isShowPassword ? "text" : "password"}
+                type={isShowOldPassword ? "text" : "password"}
                 className="update-newpass"
                 name="password"
                 value={values.password}
+                onChange={formik.handleChange}
+              />
+              <div
+                className="show-password"
+                onClick={() => setIsShowOldPassword(!isShowOldPassword)}
+              >
+                {isShowOldPassword ? (
+                  <i className="far fa-eye" />
+                ) : (
+                  <i className="far fa-eye-slash" />
+                )}
+              </div>
+              {errors.password && <p className="errors">{errors.password}</p>}
+            </div>
+            <div className="update-pass-form-group">
+              <label>New password</label>
+              <input
+                type={isShowPassword ? "text" : "password"}
+                className="update-newpass"
+                name="newPassword"
+                value={values.newPassword}
                 onChange={formik.handleChange}
               />
               <div
@@ -78,10 +104,12 @@ function ResetPassword() {
                   <i className="far fa-eye-slash" />
                 )}
               </div>
-              {errors.password && <p className="errors">{errors.password}</p>}
+              {errors.newPassword && (
+                <p className="errors">{errors.newPassword}</p>
+              )}
             </div>
             <div className="update-pass-form-group confirm-pass-group">
-              <label>New Password</label>
+              <label>Confirm New Password</label>
               <input
                 type={isShowConfirmPassword ? "text" : "password"}
                 className="update-newpass confirm-newpass"
