@@ -58,10 +58,7 @@ export const { loginSuccess, logoutSuccess, setLoading, setHasProfile } =
 export const login = (values) => async (dispatch) => {
   try {
     dispatch(setLoading({ loading: true }));
-    // const paramEmail = values.email;
-    // const arrEmail = paramEmail.split("@");
-    // const emailLogin = arrEmail[0].split(".").join("") + "@" + arrEmail[1];
-    const data = await http.post("/api/auth/login", {
+    const data = await http.post("api/auth/login", {
       email: values.email,
       password: values.password
     });
@@ -90,10 +87,6 @@ export const login = (values) => async (dispatch) => {
   } catch (e) {
     dispatch(setLoading({ loading: false }));
     pushToast("error", e.message);
-
-    if (e.message === "Please confirm token!") {
-      window.location.href = "/verify-email";
-    }
 
     return console.error(e.message);
   }
