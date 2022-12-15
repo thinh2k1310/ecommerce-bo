@@ -1,6 +1,7 @@
 // /* eslint-disable*/
 import useFetchUserReports from "hook/useFetchUserReports";
 import useDeleteReport from "hook/useDeleteReport";
+import useBlockUser from "hook/useBlockUser";
 import MainLayout from "layout/MainLayout/MainLayout";
 import { React, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -11,6 +12,7 @@ function ReportsDetail() {
   const [data, getUserReports] = useFetchUserReports();
   const { userId } = useParams();
   const [deleteReport, reload] = useDeleteReport();
+  const [blockUser] = useBlockUser();
 
   useEffect(() => {
     getUserReports(userId);
@@ -27,10 +29,16 @@ function ReportsDetail() {
         <td>{report.post?.content || report.comment?.content}</td>
         <td>
           <button
-            className="btn btn-success"
+            className="btn btn-danger"
             onClick={() => deleteReport(report._id)}
           >
             Delete
+          </button>
+          <button
+            className="btn btn-primary"
+            onClick={() => deleteReport(report._id)}
+          >
+            Reject
           </button>
         </td>
       </tr>
@@ -45,6 +53,21 @@ function ReportsDetail() {
             ? `Reports (${data[0].reportedUser.firstName}#${data[0].reportedUser._id})`
             : "Reports"}
         </h2>
+        <button
+          className="btn btn-primary"
+          onClick={() => deleteReport(userId)}
+        >
+          Reject All
+        </button>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            blockUser(userId);
+            window.location.href = "/reports";
+          }}
+        >
+          Block
+        </button>
         <div className="main">
           <Table bordered>
             <thead>

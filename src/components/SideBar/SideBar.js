@@ -15,7 +15,17 @@ const menu_manage = [
     icon: ""
   },
   {
+    label: "Reports",
+    path: "/reports",
+    icon: ""
+  },
+  {
     label: "Update Password",
+    path: "/reset-password",
+    icon: ""
+  },
+  {
+    label: "Summary",
     path: "/reset-password",
     icon: ""
   }
