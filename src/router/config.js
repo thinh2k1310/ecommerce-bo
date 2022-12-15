@@ -11,6 +11,8 @@ import CategoryCreation from "pages/Home/Categories/CategoryCreation/CategoryCre
 import CategoryManagement from "pages/Home/Categories/CategoryManagement/CategoryManagement";
 import Moderators from "pages/Home/Moderators";
 import CreateModerator from "pages/Home/Moderators/CreateModerator";
+import Reports from "pages/Home/Reports";
+import ReportsDetail from "pages/Home/Reports/ReportsDetail";
 import MerchantRequest from "pages/Home/Merchants/MerchantRequest/MerchantRequest";
 import CreateMerchant from "pages/Home/Merchants/AddMechant/CreateMerchant";
 import CategoryEdit from "pages/Home/Categories/CategoryEdit/CategoryEdit";
@@ -79,6 +81,18 @@ export const routeConfig = [
     isPrivate: true,
     exact: true,
     component: CreateModerator
+  },
+  {
+    path: "/reports",
+    isPrivate: false,
+    exact: true,
+    component: Reports
+  },
+  {
+    path: "/reports/:userId",
+    isPrivate: false,
+    exact: true,
+    component: ReportsDetail
   },
   {
     path: "/manage-merchants-request",
