@@ -30,7 +30,7 @@ const slice = createSlice({
       }
 
       if (payload?.user?.role === USER_ROLE.ADMIN) {
-        window.location.href = "/moderators";
+        window.location.href = "/summary";
       } else {
         window.location.href = "/reset-password";
       }

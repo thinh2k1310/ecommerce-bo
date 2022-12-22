@@ -20,6 +20,7 @@ import SubCateManage from "pages/Home/Categories/SubCateManage/SubCateManage";
 import NewSubCate from "pages/Home/Categories/NewSubCate/NewSubCate";
 import EditSubCate from "pages/Home/Categories/EditSubCate/EditSubCate";
 import ResetPassword from "pages/Authentication/ForgotPassword/ResetPassword";
+import Summary from "pages/Home/Summary";
 
 export const routeConfig = [
   {
@@ -93,6 +94,12 @@ export const routeConfig = [
     isPrivate: false,
     exact: true,
     component: ReportsDetail
+  },
+  {
+    path: "/summary",
+    isPrivate: false,
+    exact: true,
+    component: Summary
   },
   {
     path: "/manage-merchants-request",

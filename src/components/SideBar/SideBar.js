@@ -26,7 +26,7 @@ const menu_manage = [
   },
   {
     label: "Summary",
-    path: "/reset-password",
+    path: "/summary",
     icon: ""
   }
 ];
