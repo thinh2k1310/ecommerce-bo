@@ -10,6 +10,11 @@ import "./SideBar.scss";
 
 const menu_manage = [
   {
+    label: "Summary",
+    path: "/summary",
+    icon: ""
+  },
+  {
     label: "Moderators",
     path: "/moderators",
     icon: ""
@@ -20,13 +25,13 @@ const menu_manage = [
     icon: ""
   },
   {
-    label: "Update Password",
-    path: "/reset-password",
+    label: "Blocked Users",
+    path: "/blocked-users",
     icon: ""
   },
   {
-    label: "Summary",
-    path: "/summary",
+    label: "Update Password",
+    path: "/reset-password",
     icon: ""
   }
 ];

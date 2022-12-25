@@ -21,6 +21,7 @@ import NewSubCate from "pages/Home/Categories/NewSubCate/NewSubCate";
 import EditSubCate from "pages/Home/Categories/EditSubCate/EditSubCate";
 import ResetPassword from "pages/Authentication/ForgotPassword/ResetPassword";
 import Summary from "pages/Home/Summary";
+import BlockedUsers from "pages/Home/BlockedUsers";
 
 export const routeConfig = [
   {
@@ -76,6 +77,12 @@ export const routeConfig = [
     isPrivate: true,
     exact: true,
     component: Moderators
+  },
+  {
+    path: "/blocked-users",
+    isPrivate: true,
+    exact: true,
+    component: BlockedUsers
   },
   {
     path: "/moderators/new",

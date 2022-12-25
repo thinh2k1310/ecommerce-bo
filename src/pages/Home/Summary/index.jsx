@@ -17,15 +17,15 @@ export default function DashboardScreen() {
     const [users, summaryUser] = useSummaryUser();
     useEffect(() => {
         summaryUser();
-    });
+    }, []);
     const [posts, summaryPost] = useSummaryPost();
     useEffect(() => {
         summaryPost();
-    });
+    }, []);
     const [cases, summaryCase] = useSummaryCase();
     useEffect(() => {
         summaryCase();
-    });
+    }, []);
   var dataUser = {
     labels: users?.key,
     datasets: [
@@ -100,14 +100,24 @@ export default function DashboardScreen() {
   return (
     <MainLayout>
       <div className="overview-category">
-        <div className="main">
+        <h2>Dasboard</h2>
+        <div className="main" style={{marginLeft: '40px', marginRight: '40px'}}>
         <Pie data={dataUser} height={400} options={options} />
         </div>
-        <div className="main">
+        <div style={{marginTop: '10px', marginBottom: '100px'}}>
+          <h2 style={{ textAlign: 'center' }}>User Chart</h2>
+        </div>
+        <div className="main" style={{marginLeft: '40px', marginRight: '40px'}}>
         <Line data={dataPost} height={400} width={1000} options={options} />
         </div>
-        <div className="main">
+        <div style={{marginTop: '10px', marginBottom: '100px'}}>
+          <h2 style={{ textAlign: 'center' }}>Number of posts last 7 days</h2>
+        </div>
+        <div className="main" style={{marginLeft: '40px', marginRight: '40px'}}>
         <Line data={dataCase} height={400} width={1000} options={options} />
+        </div>
+        <div style={{marginTop: '10px', marginBottom: '100px'}}>
+          <h2 style={{ textAlign: 'center' }}>Number of cases last 7 days</h2>
         </div>
       </div>
     </MainLayout>

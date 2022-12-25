@@ -1,7 +1,9 @@
 // /* eslint-disable*/
 import useFetchUserReports from "hook/useFetchUserReports";
-import useDeleteReport from "hook/useDeleteReport";
 import useBlockUser from "hook/useBlockUser";
+import useRejectAllReport from "hook/useRejectAllReport";
+import useAcceptReport from "hook/useAcceptReport";
+import useRejectReport from "hook/useRejectReport";
 import MainLayout from "layout/MainLayout/MainLayout";
 import { React, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -11,13 +13,18 @@ import "./MerchantRequest.scss";
 function ReportsDetail() {
   const [data, getUserReports] = useFetchUserReports();
   const { userId } = useParams();
-  const [deleteReport, reload] = useDeleteReport();
+  const [rejectAllReport] = useRejectAllReport();
+  const [rejectReport, reloadWhenReject, isRejected] = useRejectReport();
+  const [acceptReport, reloadWhenAccept, isAccepted] = useAcceptReport();
   const [blockUser] = useBlockUser();
 
   useEffect(() => {
     getUserReports(userId);
-  }, [userId, reload]);
+  }, [userId, reloadWhenAccept, reloadWhenReject]);
 
+  if ((!data || !data[0]) && (isRejected || isAccepted)) {
+    window.location.href = "/reports";
+  }
   const tableReports = data?.map((report, index) => {
     return (
       <tr key={index}>
@@ -29,14 +36,14 @@ function ReportsDetail() {
         <td>{report.post?.content || report.comment?.content}</td>
         <td>
           <button
-            className="btn btn-danger"
-            onClick={() => deleteReport(report._id)}
+            className="btn btn-primary"
+            onClick={() => acceptReport(report._id)}
           >
-            Delete
+            Accept
           </button>
           <button
-            className="btn btn-primary"
-            onClick={() => deleteReport(report._id)}
+            className="btn btn-danger"
+            onClick={() => rejectReport(report._id)}
           >
             Reject
           </button>
@@ -49,13 +56,16 @@ function ReportsDetail() {
     <MainLayout>
       <div className="overview-category">
         <h2>
-          {data
+          {data && data[0]
             ? `Reports (${data[0].reportedUser.firstName}#${data[0].reportedUser._id})`
             : "Reports"}
         </h2>
         <button
           className="btn btn-primary"
-          onClick={() => deleteReport(userId)}
+          onClick={() => {
+            rejectAllReport(userId);
+            window.location.href = "/reports";
+          }}
         >
           Reject All
         </button>
